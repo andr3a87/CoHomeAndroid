@@ -1,0 +1,188 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.androidspike.Page1"
+    tools:ignore="MergeRootFrame" >
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" 
+        android:background="#edded6"
+        >
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/box1" />
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="152dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="20dp"
+            android:text="Inserisci Località"
+            android:textColor="#fff"
+            android:textSize="18dp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/editLocation"
+            android:layout_width="345dp"
+            android:layout_height="35dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginTop="50dp"
+            android:background="#fff"
+            android:ems="10" >
+
+            <requestFocus />
+        </EditText>
+
+        <ImageView
+            android:id="@+id/boxCalendarStart"
+            android:layout_width="161dp"
+            android:layout_height="161dp"
+            android:src="@drawable/box_calendar" 
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="120dp"
+            />
+        
+        <ImageView
+            android:id="@+id/boxCalendarEnd"
+            android:layout_width="161dp"
+            android:layout_height="161dp"
+            android:src="@drawable/box_calendar" 
+            android:layout_marginLeft="200dp"
+            android:layout_marginTop="120dp"
+            />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="135dp"
+            android:layout_marginLeft="40dp"
+            android:text="ARRIVO" 
+            android:textColor="#05bdf9"
+            />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/ic_calendar" 
+            android:layout_marginTop="130dp"
+            android:layout_marginLeft="135dp"
+            />
+
+        <TextView
+            android:id="@+id/textDateStart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:layout_marginTop="250dp"
+            android:layout_marginLeft="70dp"
+            
+             />
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="135dp"
+            android:layout_marginLeft="230dp"
+            android:text="PARTENZA" 
+            android:textColor="#05bdf9"
+            />
+
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/ic_calendar" 
+            android:layout_marginTop="130dp"
+            android:layout_marginLeft="315dp"
+            />
+
+        <TextView
+            android:id="@+id/textDateEnd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:layout_marginTop="250dp"
+            android:layout_marginLeft="250dp"
+             />
+		<TextView
+            android:id="@+id/textDayStart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="44dp"
+            android:textStyle="bold"
+            android:layout_marginTop="170dp"
+            android:layout_marginLeft="40dp"
+            android:text="" />
+		<TextView
+            android:id="@+id/textMonthStart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15dp"
+            android:layout_marginTop="180dp"
+            android:layout_marginLeft="100dp"
+            android:text="" />
+		<TextView
+            android:id="@+id/textYearStart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15dp"
+            android:layout_marginTop="200dp"
+            android:layout_marginLeft="100dp"
+            android:text="" />
+		<TextView
+            android:id="@+id/textDayOfWeekStart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12dp"
+            android:layout_marginTop="220dp"
+            android:layout_marginLeft="40dp"
+            android:text="" />
+		<TextView
+            android:id="@+id/textDayEnd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="44dp"
+            android:textStyle="bold"
+            android:layout_marginTop="170dp"
+            android:layout_marginLeft="220dp"
+            android:text="" />
+		<TextView
+            android:id="@+id/textMonthEnd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15dp"
+            android:layout_marginTop="180dp"
+            android:layout_marginLeft="280dp"
+            android:text="" />
+		<TextView
+            android:id="@+id/textYearEnd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15dp"
+            android:layout_marginTop="200dp"
+            android:layout_marginLeft="280dp"
+            android:text="" />
+		<TextView
+            android:id="@+id/textDayOfWeekEnd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12dp"
+            android:layout_marginTop="220dp"
+            android:layout_marginLeft="220dp"
+            android:text="" />
+    </FrameLayout>
+</FrameLayout>
+
