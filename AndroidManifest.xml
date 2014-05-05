@@ -7,14 +7,14 @@
     <uses-sdk
         android:minSdkVersion="16"
         android:targetSdkVersion="19" />
-
+	<uses-permission android:name="android.permission.INTERNET" />
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.example.androidspike.MainActivity"
+            android:name="com.cohome.android.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.androidspike.Page1"
+            android:name="com.cohome.android.Page1"
             android:label="@string/title_activity_page1" >
         </activity>
     </application>

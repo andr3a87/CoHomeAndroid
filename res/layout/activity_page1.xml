@@ -3,7 +3,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.androidspike.Page1"
+    tools:context="com.cohome.android.Page1"
     tools:ignore="MergeRootFrame" >
 
     <FrameLayout
@@ -30,20 +30,18 @@
             android:textColor="#fff"
             android:textSize="18dp"
             android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/editLocation"
-            android:layout_width="345dp"
+		
+		<AutoCompleteTextView
+		    android:id="@+id/autoComplete"
+		    android:layout_width="345dp"
             android:layout_height="35dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="40dp"
             android:layout_marginTop="50dp"
             android:background="#fff"
-            android:ems="10" >
-
-            <requestFocus />
-        </EditText>
-
+            android:ems="10"
+		    android:text="" />
+        
         <ImageView
             android:id="@+id/boxCalendarStart"
             android:layout_width="161dp"
@@ -183,6 +181,9 @@
             android:layout_marginTop="220dp"
             android:layout_marginLeft="220dp"
             android:text="" />
+
+		
+
     </FrameLayout>
 </FrameLayout>
 
