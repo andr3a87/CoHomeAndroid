@@ -26,7 +26,7 @@ public class MainActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				Intent openPage1 = new Intent(MainActivity.this,Page1.class);  
+				Intent openPage1 = new Intent(MainActivity.this,SearchAd.class);  
 				startActivity(openPage1);
 				
 			}
