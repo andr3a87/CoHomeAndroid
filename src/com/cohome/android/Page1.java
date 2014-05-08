@@ -40,6 +40,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class Page1 extends Activity implements OnClickListener,	OnItemClickListener {
+    private static final String LOG_TAG = "CoHomeAndroid";
+
 	// Widget GUI
 	TextView txtDateStart;
 	ImageView imgCalendarStart;
@@ -55,6 +57,11 @@ public class Page1 extends Activity implements OnClickListener,	OnItemClickListe
 	TextView txtMonthEnd;
 	TextView txtYearEnd;
 	TextView txtDayOfWeekEnd;
+	
+	ImageView imgAdd;
+	ImageView imgLess;
+	TextView nOspiti;
+	
 	String[] strDays = new String[]{
             "Sunday",
             "Monday",
@@ -124,7 +131,11 @@ public class Page1 extends Activity implements OnClickListener,	OnItemClickListe
 		txtDayOfWeekEnd.setText(strDays[c.get(Calendar.DAY_OF_WEEK) - 1]);
 		imgCalendarEnd.setOnClickListener(this);
 		
-		
+		imgAdd = (ImageView) findViewById(R.id.imageAdd);
+		imgLess = (ImageView) findViewById(R.id.imageLess);
+		nOspiti =(TextView) findViewById(R.id.editTextOspiti);
+		imgAdd.setOnClickListener(this);
+		imgLess.setOnClickListener(this);
 	}
 	
 	
@@ -207,7 +218,17 @@ public class Page1 extends Activity implements OnClickListener,	OnItemClickListe
 					}, mYear, mMonth, mDay);
 			dpd.show();
 		}
-		
+		if(v == imgAdd){
+			int n = Integer.parseInt(nOspiti.getText().toString());
+			n++;
+			nOspiti.setText(String.valueOf(n));
+		}
+		if(v == imgLess){
+			int n = Integer.parseInt(nOspiti.getText().toString());
+			n--;
+			if(n>0)
+			nOspiti.setText(String.valueOf(n));
+		}
 	}
 
 
