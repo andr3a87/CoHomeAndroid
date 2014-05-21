@@ -10,5 +10,6 @@
     <string name="nomestr">OK</string>
     <string name="title_activity_page1">Page1</string>
     <string name="page_top">Android Tutorial</string>
+    <string name="title_activity_view_ad">ViewAd</string>
 
 </resources>

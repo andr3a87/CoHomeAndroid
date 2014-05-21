@@ -15,6 +15,7 @@ import org.json.JSONObject;
 import com.cohome.util.JsonObject;
 import com.cohome.util.PlacesAutoCompleteAdapter;
 import com.example.androidspike.R;
+import com.example.androidspike.ViewAd;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
@@ -233,10 +234,8 @@ public class SearchAd extends Activity implements OnClickListener,	OnItemClickLi
 			nOspiti.setText(String.valueOf(n));
 		}
 		if(v == cerca){
-			JsonObject task = new JsonObject();
-	        task.execute(new String[] { URL });
-	        //Intent openPage2 = new Intent(SearchAd.this,ViewAd.class);  
-			//startActivity(ViewAd);
+			Intent openPage2 = new Intent(SearchAd.this,ViewAd.class);  
+			startActivity(openPage2);
 		}
 	}
 
