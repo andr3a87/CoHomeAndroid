@@ -33,13 +33,13 @@
 		
 		<AutoCompleteTextView
 		    android:id="@+id/autoComplete"
-		    android:layout_width="345dp"
-            android:layout_height="35dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="40dp"
-            android:layout_marginTop="50dp"
-            android:background="#fff"
-            android:ems="10"
+		    android:layout_width="279dp"
+		    android:layout_height="35dp"
+		    android:layout_marginLeft="20dp"
+		    android:layout_marginRight="40dp"
+		    android:layout_marginTop="50dp"
+		    android:background="#fff"
+		    android:ems="10"
 		    android:text="" />
         
         <ImageView

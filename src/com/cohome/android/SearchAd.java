@@ -1,40 +1,24 @@
 package com.cohome.android;
 
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.util.ArrayList;
+
 import java.util.Calendar;
-import java.util.Date;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import com.cohome.util.JsonObject;
 import com.cohome.util.PlacesAutoCompleteAdapter;
 import com.example.androidspike.R;
-import com.example.androidspike.ViewAd;
 
+//import com.example.androidspike.ViewAd;
 import android.app.Activity;
 import android.app.DatePickerDialog;
-import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -92,7 +76,7 @@ public class SearchAd extends Activity implements OnClickListener,	OnItemClickLi
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_page1);
+		setContentView(R.layout.activity_search_ad);
 
 		AutoCompleteTextView autoCompView = (AutoCompleteTextView) findViewById(R.id.autoComplete);
 		autoCompView.setAdapter(new PlacesAutoCompleteAdapter(this, R.layout.list_item));
@@ -147,7 +131,7 @@ public class SearchAd extends Activity implements OnClickListener,	OnItemClickLi
 	public boolean onCreateOptionsMenu(Menu menu) {
 
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.page1, menu);
+		getMenuInflater().inflate(R.menu.search_ad, menu);
 		return true;
 	}
 
@@ -163,26 +147,7 @@ public class SearchAd extends Activity implements OnClickListener,	OnItemClickLi
 		return super.onOptionsItemSelected(item);
 	}
 
-	/**
-	 * A placeholder fragment containing a simple view.
-	 */
-	public static class PlaceholderFragment extends Fragment {
-
-		public PlaceholderFragment() {
-		}
-
-		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_page1,
-					container, false);
-			return rootView;
-		}
-	}
-
 	
-	
-
 	@Override
 	public void onClick(View v) {
 		final Calendar c = Calendar.getInstance();
