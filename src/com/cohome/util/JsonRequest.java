@@ -15,7 +15,7 @@ import org.json.JSONObject;
 import android.os.AsyncTask;
 import android.util.Log;
 
-public class JsonObject extends AsyncTask<String, Void, String> {
+public class JsonRequest extends AsyncTask<String, Void, String> {
     private static final String LOG_TAG = "CoHomeAndroid";
 
 	JSONObject json=null;
@@ -25,11 +25,8 @@ public class JsonObject extends AsyncTask<String, Void, String> {
     protected String doInBackground(String... urls) {
         String output = null;
         for (String url : urls) {
-            output = getOutputFromUrl("http://192.168.1.100:8080/CoHome-war/JSONServlet");
-            Log.e(LOG_TAG, "Output: "+output);
+            output = getOutputFromUrl(url);
         }
-        
-        
         return output;
     }
 	
@@ -42,18 +39,20 @@ public class JsonObject extends AsyncTask<String, Void, String> {
         try {
             DefaultHttpClient httpClient = new DefaultHttpClient();
             HttpGet httpGet = new HttpGet(url);
-
             HttpResponse httpResponse = httpClient.execute(httpGet);
             HttpEntity httpEntity = httpResponse.getEntity();
             output = EntityUtils.toString(httpEntity);
-            
+            json= new JSONObject(output);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (ClientProtocolException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        } catch (JSONException e) {
+			e.printStackTrace();
+		}
         return output;
     }
+        
 }

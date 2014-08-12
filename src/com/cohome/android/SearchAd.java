@@ -3,8 +3,11 @@ package com.cohome.android;
 
 import java.util.Calendar;
 
+import com.cohome.util.JsonRequest;
 import com.cohome.util.PlacesAutoCompleteAdapter;
 import com.example.androidspike.R;
+
+
 
 //import com.example.androidspike.ViewAd;
 import android.app.Activity;
@@ -25,7 +28,7 @@ import android.widget.Toast;
 
 public class SearchAd extends Activity implements OnClickListener,	OnItemClickListener {
     private static final String LOG_TAG = "CoHomeAndroid";
-    public static final String URL = "http://localhost:8080/CoHome-war/JSONServlet/";
+    public static final String URL = "http://192.168.1.100:8080/CoHome-war/JSONServlet?op=cercaAnnunci&location=Torino,TO,Italia";
 	// Widget GUI
 	TextView txtDateStart;
 	ImageView imgCalendarStart;
@@ -199,7 +202,10 @@ public class SearchAd extends Activity implements OnClickListener,	OnItemClickLi
 			nOspiti.setText(String.valueOf(n));
 		}
 		if(v == cerca){
-			Intent openPage2 = new Intent(SearchAd.this,ViewAd.class);  
+			Intent openPage2 = new Intent(SearchAd.this,ViewAd.class);
+			//JsonRequest a = new JsonRequest();
+			//a.execute(new String[] { URL });
+			//System.out.println(a.getInfo());
 			startActivity(openPage2);
 		}
 	}
