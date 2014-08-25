@@ -1,7 +1,17 @@
 package com.cohome.android;
 
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.Calendar;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONObject;
 
 import com.cohome.util.JsonRequest;
 import com.cohome.util.PlacesAutoCompleteAdapter;
@@ -9,10 +19,13 @@ import com.example.androidspike.R;
 
 
 
+
+
 //import com.example.androidspike.ViewAd;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,6 +41,7 @@ import android.widget.Toast;
 
 public class SearchAd extends Activity implements OnClickListener,	OnItemClickListener {
     private static final String LOG_TAG = "CoHomeAndroid";
+    public final static String EXTRA_MESSAGE = "annunci";
     public static final String URL = "http://192.168.1.100:8080/CoHome-war/JSONServlet?op=cercaAnnunci&location=Torino,TO,Italia";
 	// Widget GUI
 	TextView txtDateStart;
@@ -202,19 +216,53 @@ public class SearchAd extends Activity implements OnClickListener,	OnItemClickLi
 			nOspiti.setText(String.valueOf(n));
 		}
 		if(v == cerca){
-			Intent openPage2 = new Intent(SearchAd.this,ViewAd.class);
-			//JsonRequest a = new JsonRequest();
-			//a.execute(new String[] { URL });
-			//System.out.println(a.getInfo());
-			startActivity(openPage2);
+			JsonRequest a = new JsonRequest();
+			a.execute(new String[] { URL });
 		}
 	}
-
 
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,long id) {
 		 String str = (String) parent.getItemAtPosition(position);
 	     Toast.makeText(this, str, Toast.LENGTH_SHORT).show();
+	}
+	
+	private class JsonRequest extends AsyncTask<String, Void, String> {
+	    private static final String LOG_TAG = "CoHomeAndroid";
+		
+		@Override
+	    protected String doInBackground(String... urls) {
+	        String output = null;
+	        for (String url : urls) {
+	            output = getOutputFromUrl(url);
+	        }
+	        return output;
+	    }
+		
+	    private String getOutputFromUrl(String url) {
+	        String output = null;
+	        try {
+	            DefaultHttpClient httpClient = new DefaultHttpClient();
+	            HttpGet httpGet = new HttpGet(url);
+	            HttpResponse httpResponse = httpClient.execute(httpGet);
+	            HttpEntity httpEntity = httpResponse.getEntity();
+	            output = EntityUtils.toString(httpEntity);
+	        } catch (UnsupportedEncodingException e) {
+	            e.printStackTrace();
+	        } catch (ClientProtocolException e) {
+	            e.printStackTrace();
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        } 
+	        return output;
+	    }
+	    @Override
+	    protected void onPostExecute(String output) {
+	    	Intent intent = new Intent(getApplicationContext(),ViewAd.class);
+	    	intent.putExtra(EXTRA_MESSAGE, output);
+	    	startActivity(intent);
+	    }
+	 
 	}
 	
 	
