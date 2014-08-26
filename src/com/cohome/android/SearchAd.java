@@ -42,8 +42,9 @@ import android.widget.Toast;
 public class SearchAd extends Activity implements OnClickListener,	OnItemClickListener {
     private static final String LOG_TAG = "CoHomeAndroid";
     public final static String EXTRA_MESSAGE = "annunci";
-    public static final String URL = "http://192.168.1.100:8080/CoHome-war/JSONServlet?op=cercaAnnunci&location=Torino,TO,Italia";
+    public static String URL = "http://192.168.1.100:8080/CoHome-war/JSONServlet?op=cercaAnnunci&location=";
 	// Widget GUI
+    AutoCompleteTextView autoCompView;
 	TextView txtDateStart;
 	ImageView imgCalendarStart;
 	TextView txtDateEnd;
@@ -95,7 +96,7 @@ public class SearchAd extends Activity implements OnClickListener,	OnItemClickLi
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_search_ad);
 
-		AutoCompleteTextView autoCompView = (AutoCompleteTextView) findViewById(R.id.autoComplete);
+		autoCompView = (AutoCompleteTextView) findViewById(R.id.autoComplete);
 		autoCompView.setAdapter(new PlacesAutoCompleteAdapter(this, R.layout.list_item));
 		autoCompView.setOnItemClickListener(this);
 
@@ -217,7 +218,8 @@ public class SearchAd extends Activity implements OnClickListener,	OnItemClickLi
 		}
 		if(v == cerca){
 			JsonRequest a = new JsonRequest();
-			a.execute(new String[] { URL });
+			URL += autoCompView.getText();
+			a.execute(new String[] { URL.replace(" ", "") });
 		}
 	}
 

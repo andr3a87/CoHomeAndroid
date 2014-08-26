@@ -9,11 +9,15 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.cohome.util.JsonRequest;
 import com.example.androidspike.R;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.MapFragment;
@@ -42,17 +46,39 @@ public class ViewAd extends Activity {
 		super.onCreate(savedInstanceState);
 		
 		setContentView(R.layout.activity_view_ad);
+		JSONObject j;
 		Intent intent = getIntent();
-		String message = intent.getStringExtra(SearchAd.EXTRA_MESSAGE);
-		System.out.println(message);
+		String response = intent.getStringExtra(SearchAd.EXTRA_MESSAGE);
+		//System.out.println(message);
+		try {
+			j = new JSONObject(response);
+		
+			mMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
+			CameraPosition cameraPosition = new CameraPosition.Builder()
+		    .target(new LatLng(Double.parseDouble(j.getJSONObject("coordinate").getString("lat")),Double.parseDouble(j.getJSONObject("coordinate").getString("lng"))))  // Sets the center of the map to Mountain View
+		    .zoom(13)                   // Sets the zoom
+		    .build();                   // Creates a CameraPosition from the builder
+			mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
+			JSONArray a = j.getJSONArray("annunci");
+			for(int index=0; index<a.length()-1;index++)
+				addMarker((JSONObject)a.get(index));	
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+ 	}
+	public void addMarker(JSONObject j){
+		try {
 		mMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
 		mMap.addMarker(new MarkerOptions()
-		        .position(new LatLng(10, 10))
-		        .title("Hello world"));
-		
-		
-		
- 	}
+			        .position(new LatLng(Double.parseDouble(j.getString("lat")),Double.parseDouble(j.getString("lng"))))
+			        .title(j.getString("titolo")) );
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+	}
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 
