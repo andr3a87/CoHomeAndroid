@@ -28,6 +28,14 @@ public class MainActivity extends Activity {
 				startActivity(openPage1);	
 			}
 		});
+		Button btnGPS = (Button) findViewById(R.id.button2);  
+		btnGPS.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent openPage2 = new Intent(MainActivity.this,ActivityGPS.class); 
+				startActivity(openPage2);	
+			}
+		});
 	}
 
 	@Override

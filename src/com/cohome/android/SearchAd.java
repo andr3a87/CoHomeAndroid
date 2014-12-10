@@ -21,12 +21,14 @@ import com.example.androidspike.R;
 
 
 
+
 //import com.example.androidspike.ViewAd;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -42,7 +44,7 @@ import android.widget.Toast;
 public class SearchAd extends Activity implements OnClickListener,	OnItemClickListener {
     private static final String LOG_TAG = "CoHomeAndroid";
     public final static String EXTRA_MESSAGE = "annunci";
-    public static String URL = "http://192.168.1.100:8080/CoHome-war/JSONServlet?op=cercaAnnunci&location=";
+    public static String URL = "http://192.168.1.107:8080/CoHome-war/JSONServlet?op=cercaAnnunci&location=";
 	// Widget GUI
     AutoCompleteTextView autoCompView;
 	TextView txtDateStart;
@@ -113,7 +115,7 @@ public class SearchAd extends Activity implements OnClickListener,	OnItemClickLi
 		Calendar c = Calendar.getInstance();
 		txtDateStart.setText(c.get(Calendar.DAY_OF_MONTH) + "-"+ (c.get(Calendar.MONTH) + 1) + "-" + c.get(Calendar.YEAR));
 		txtDayStart.setText(String.valueOf(c.get(Calendar.DAY_OF_MONTH)));
-		txtMonthStart.setText(strMonth[c.get(Calendar.MONTH) - 1]);
+		txtMonthStart.setText(strMonth[c.get(Calendar.MONTH) ]);
 		txtYearStart.setText(String.valueOf(c.get(Calendar.YEAR)));
 		txtDayOfWeekStart.setText(strDays[c.get(Calendar.DAY_OF_WEEK) - 1]);
 		
@@ -129,7 +131,7 @@ public class SearchAd extends Activity implements OnClickListener,	OnItemClickLi
 		c.set(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH) +1);
 		txtDateEnd.setText(c.get(Calendar.DAY_OF_MONTH) + "-"+ (c.get(Calendar.MONTH) + 1) + "-" + c.get(Calendar.YEAR));
 		txtDayEnd.setText(String.valueOf(c.get(Calendar.DAY_OF_MONTH)));
-		txtMonthEnd.setText(strMonth[c.get(Calendar.MONTH) - 1]);
+		txtMonthEnd.setText(strMonth[c.get(Calendar.MONTH)]);
 		txtYearEnd.setText(String.valueOf(c.get(Calendar.YEAR)));
 		txtDayOfWeekEnd.setText(strDays[c.get(Calendar.DAY_OF_WEEK) - 1]);
 		imgCalendarEnd.setOnClickListener(this);
@@ -219,6 +221,7 @@ public class SearchAd extends Activity implements OnClickListener,	OnItemClickLi
 		if(v == cerca){
 			JsonRequest a = new JsonRequest();
 			URL += autoCompView.getText();
+			Log.e(LOG_TAG, "URL: "+URL);
 			a.execute(new String[] { URL.replace(" ", "") });
 		}
 	}
