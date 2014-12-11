@@ -1,23 +1,42 @@
 package com.cohome.android;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
+
 import com.example.androidspike.R;
-import com.example.androidspike.R.layout;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
 
 import android.app.Activity;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.location.LocationProvider;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.util.Log;
 import android.widget.TextView;
 
 public class ActivityGPS extends Activity {
+	private static final String LOG_TAG = "CoHomeAndroid";
+	
 	private String providerId = LocationManager.GPS_PROVIDER;
 	TextView available,enabled,provider,timestamp,latitude,longitude,speed,altitude;
+	private GoogleMap mMapView;
+	
+	private String annunci;
+    public static String URL = "http://192.168.1.107:8080/CoHome-war/JSONServlet?op=cercaAnnunci&location=";
 	
 	private LocationListener myLocationListener = new LocationListener() { 
 		@Override
@@ -46,6 +65,7 @@ public class ActivityGPS extends Activity {
 		@Override
 		public void onLocationChanged(Location location) { 
 			updateLocationData(location);
+			updateMapView(location);
 		}
 
 	};
@@ -81,8 +101,9 @@ public class ActivityGPS extends Activity {
 			if (location != null) {
 				updateLocationData(location);
 			} 
-			locationManager.requestLocationUpdates(providerId, 15, 1, myLocationListener);
+			locationManager.requestLocationUpdates(providerId, 10000, 0, myLocationListener);
 		}
+		mMapView = ((MapFragment) getFragmentManager().findFragmentById(R.id.map1)).getMap();
 	 }
 	
 	@Override 
@@ -90,11 +111,6 @@ public class ActivityGPS extends Activity {
 		super.onPause(); 
 		LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 		locationManager.removeUpdates(myLocationListener);
-	}
-	
-	private void setTextViewValue(int textViewId, String value) { 
-		  TextView textView = (TextView) findViewById(textViewId);
-		  textView.setText(value);
 	}
 	
 	private void updateLocationData(Location location) {
@@ -123,5 +139,56 @@ public class ActivityGPS extends Activity {
 		   speed.setText(String.valueOf(s)); 
 		}
 	 }
+	
+	private void updateMapView(Location location) {
+		double lat = location.getLatitude(); 
+		double lng = location.getLongitude(); 
+		
+		CameraPosition cameraPosition = new CameraPosition.Builder()
+	    .target(new LatLng(lat,lng))  	// Sets the center of the map to Mountain View
+	    .build();                   	// Creates a CameraPosition from the builder
+		mMapView.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+		
+		/*JsonRequest a = new JsonRequest();
+		URL += "";
+		Log.e(LOG_TAG, "URL: "+URL);
+		a.execute(new String[] { URL.replace(" ", "") });*/
+	}
+	
+	
+	private class JsonRequest extends AsyncTask<String, Void, String> {
+		
+		@Override
+	    protected String doInBackground(String... urls) {
+	        String output = null;
+	        for (String url : urls) {
+	            output = getOutputFromUrl(url);
+	        }
+	        return output;
+	    }
+		
+	    private String getOutputFromUrl(String url) {
+	        String output = null;
+	        try {
+	            DefaultHttpClient httpClient = new DefaultHttpClient();
+	            HttpGet httpGet = new HttpGet(url);
+	            HttpResponse httpResponse = httpClient.execute(httpGet);
+	            HttpEntity httpEntity = httpResponse.getEntity();
+	            output = EntityUtils.toString(httpEntity);
+	        } catch (UnsupportedEncodingException e) {
+	            e.printStackTrace();
+	        } catch (ClientProtocolException e) {
+	            e.printStackTrace();
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        } 
+	        return output;
+	    }
+	    @Override
+	    protected void onPostExecute(String output) {
+	    	annunci=output;	
+	    }
+	 
+	}
 
 }

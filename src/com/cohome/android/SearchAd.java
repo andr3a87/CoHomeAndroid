@@ -13,12 +13,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 
-import com.cohome.util.JsonRequest;
 import com.cohome.util.PlacesAutoCompleteAdapter;
 import com.example.androidspike.R;
-
-
-
 
 
 
@@ -113,9 +109,9 @@ public class SearchAd extends Activity implements OnClickListener,	OnItemClickLi
 		imgCalendarStart = (ImageView) findViewById(R.id.boxCalendarStart);
 		
 		Calendar c = Calendar.getInstance();
-		txtDateStart.setText(c.get(Calendar.DAY_OF_MONTH) + "-"+ (c.get(Calendar.MONTH) + 1) + "-" + c.get(Calendar.YEAR));
+		txtDateStart.setText(c.get(Calendar.DAY_OF_MONTH) + "-"+ (c.get(Calendar.MONTH)) + "-" + c.get(Calendar.YEAR));
 		txtDayStart.setText(String.valueOf(c.get(Calendar.DAY_OF_MONTH)));
-		txtMonthStart.setText(strMonth[c.get(Calendar.MONTH) ]);
+		txtMonthStart.setText(strMonth[c.get(Calendar.MONTH)]);
 		txtYearStart.setText(String.valueOf(c.get(Calendar.YEAR)));
 		txtDayOfWeekStart.setText(strDays[c.get(Calendar.DAY_OF_WEEK) - 1]);
 		
@@ -128,8 +124,8 @@ public class SearchAd extends Activity implements OnClickListener,	OnItemClickLi
 		txtDayOfWeekEnd= (TextView) findViewById(R.id.textDayOfWeekEnd);
 		imgCalendarEnd = (ImageView) findViewById(R.id.boxCalendarEnd);
 		
-		c.set(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH) +1);
-		txtDateEnd.setText(c.get(Calendar.DAY_OF_MONTH) + "-"+ (c.get(Calendar.MONTH) + 1) + "-" + c.get(Calendar.YEAR));
+		c.set(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
+		txtDateEnd.setText(c.get(Calendar.DAY_OF_MONTH) + "-"+ (c.get(Calendar.MONTH)) + "-" + c.get(Calendar.YEAR));
 		txtDayEnd.setText(String.valueOf(c.get(Calendar.DAY_OF_MONTH)));
 		txtMonthEnd.setText(strMonth[c.get(Calendar.MONTH)]);
 		txtYearEnd.setText(String.valueOf(c.get(Calendar.YEAR)));
@@ -183,7 +179,7 @@ public class SearchAd extends Activity implements OnClickListener,	OnItemClickLi
 							// Display Selected date in textbox
 							txtDateStart.setText(dayOfMonth + "-"+ (monthOfYear + 1) + "-" + year);
 							txtDayStart.setText(String.valueOf(dayOfMonth));
-							txtMonthStart.setText(strMonth[monthOfYear - 1]);
+							txtMonthStart.setText(strMonth[monthOfYear]);
 							txtYearStart.setText(String.valueOf(year));
 							c.set(year, monthOfYear, dayOfMonth);
 							txtDayOfWeekStart.setText(strDays[c.get(Calendar.DAY_OF_WEEK) - 1]);
@@ -199,7 +195,7 @@ public class SearchAd extends Activity implements OnClickListener,	OnItemClickLi
 							// Display Selected date in textbox
 							txtDateEnd.setText(dayOfMonth + "-"+ (monthOfYear + 1) + "-" + year);
 							txtDayEnd.setText(String.valueOf(dayOfMonth));
-							txtMonthEnd.setText(strMonth[monthOfYear - 1]);
+							txtMonthEnd.setText(strMonth[monthOfYear]);
 							txtYearEnd.setText(String.valueOf(year));
 							c.set(year, monthOfYear, dayOfMonth);
 							txtDayOfWeekEnd.setText(strDays[c.get(Calendar.DAY_OF_WEEK) - 1]);
