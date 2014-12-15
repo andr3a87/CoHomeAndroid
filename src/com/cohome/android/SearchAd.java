@@ -18,6 +18,7 @@ import com.example.androidspike.R;
 
 
 
+
 //import com.example.androidspike.ViewAd;
 import android.app.Activity;
 import android.app.DatePickerDialog;
@@ -41,6 +42,7 @@ public class SearchAd extends Activity implements OnClickListener,	OnItemClickLi
     private static final String LOG_TAG = "CoHomeAndroid";
     public final static String EXTRA_MESSAGE = "annunci";
     public static String URL = "http://192.168.1.107:8080/CoHome-war/JSONServlet?op=cercaAnnunci&location=";
+    //public static String URL = "http://172.16.126.219:8080/CoHome-war/JSONServlet?op=cercaAnnunci&location=";
 	// Widget GUI
     AutoCompleteTextView autoCompView;
 	TextView txtDateStart;

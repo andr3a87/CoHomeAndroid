@@ -1,15 +1,23 @@
 package com.cohome.android;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import com.example.androidspike.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -17,8 +25,10 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -36,8 +46,8 @@ public class ActivityGPS extends Activity {
 	private GoogleMap mMapView;
 	
 	private String annunci;
-    public static String URL = "http://192.168.1.107:8080/CoHome-war/JSONServlet?op=cercaAnnunci&location=";
-	
+    public static String URL = "http://192.168.1.107:8080/CoHome-war/JSONServlet?op=cercaAnnunciFromGPS";
+	//public static String URL = "http://172.16.126.219:8080/CoHome-war/JSONServlet?op=cercaAnnunciFromGPS";
 	private LocationListener myLocationListener = new LocationListener() { 
 		@Override
 		public void onStatusChanged(String provider, int status, Bundle extras) {
@@ -101,7 +111,7 @@ public class ActivityGPS extends Activity {
 			if (location != null) {
 				updateLocationData(location);
 			} 
-			locationManager.requestLocationUpdates(providerId, 10000, 0, myLocationListener);
+			locationManager.requestLocationUpdates(providerId, 12000, 0, myLocationListener);
 		}
 		mMapView = ((MapFragment) getFragmentManager().findFragmentById(R.id.map1)).getMap();
 	 }
@@ -143,21 +153,51 @@ public class ActivityGPS extends Activity {
 	private void updateMapView(Location location) {
 		double lat = location.getLatitude(); 
 		double lng = location.getLongitude(); 
+		JSONObject j;
+		String URL2 = "";
 		
 		CameraPosition cameraPosition = new CameraPosition.Builder()
 	    .target(new LatLng(lat,lng))  	// Sets the center of the map to Mountain View
+	    .zoom(13)
 	    .build();                   	// Creates a CameraPosition from the builder
 		mMapView.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-		
-		/*JsonRequest a = new JsonRequest();
-		URL += "";
-		Log.e(LOG_TAG, "URL: "+URL);
-		a.execute(new String[] { URL.replace(" ", "") });*/
+		//try {
+			JsonRequest a = new JsonRequest(mMapView);
+			URL2 += URL+"&latitude="+lat+"&longitude="+lng;
+			a.execute(new String[] { URL2.replace(" ", "") });
+			
+			/*j = new JSONObject();
+			JSONArray arr = j.getJSONArray("annunci");
+			for(int index=0; index<arr.length()-1;index++)
+				addMarker((JSONObject)arr.get(index));	
+		} catch (JSONException e) {
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
+	}	
+	
+	public void addMarker(JSONObject j){
+		try {
+			mMapView = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
+			mMapView.addMarker(new MarkerOptions()
+			        .position(new LatLng(Double.parseDouble(j.getString("lat")),Double.parseDouble(j.getString("lng"))))
+			        .title(j.getString("titolo")) );
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	
 	private class JsonRequest extends AsyncTask<String, Void, String> {
+		private GoogleMap mMapView;
 		
+		public JsonRequest(GoogleMap mMapView){
+			this.mMapView=mMapView;
+		}
 		@Override
 	    protected String doInBackground(String... urls) {
 	        String output = null;
@@ -184,9 +224,24 @@ public class ActivityGPS extends Activity {
 	        } 
 	        return output;
 	    }
+	    
 	    @Override
 	    protected void onPostExecute(String output) {
-	    	annunci=output;	
+	    	try {
+		    	JSONObject j = new JSONObject(output);
+				JSONArray arr;
+				arr = j.getJSONArray("annunci");
+				for(int index=0; index<arr.length()-1;index++){
+					JSONObject x = (JSONObject)arr.get(index);
+					mMapView.addMarker(new MarkerOptions()
+					.position(new LatLng(Double.parseDouble(x.getString("lat")),Double.parseDouble(x.getString("lng"))))
+			        .title(x.getString("titolo")) );
+					Log.e(LOG_TAG, "Lat-Lng: "+x.getString("lat")+"--"+x.getString("lng"));
+				}	
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	    }
 	 
 	}
